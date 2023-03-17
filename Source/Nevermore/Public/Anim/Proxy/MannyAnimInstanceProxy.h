@@ -9,7 +9,8 @@
 class UMannyAnimInstance;
 
 /**
- * 
+ * FMannyAnimInstanceProxy is designed to do all necessary logic evaluations in a thread-safe way on the worker threads,
+ * so AnimationBlueprints could be evaluated in the parallel
  */
 USTRUCT(BlueprintType)
 struct NEVERMORE_API FMannyAnimInstanceProxy : public FAnimInstanceProxy
