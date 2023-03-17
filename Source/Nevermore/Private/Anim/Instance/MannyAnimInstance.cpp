@@ -4,11 +4,11 @@
 #include "Anim/Instance/MannyAnimInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
+#include "Anim/Proxy/MannyAnimInstanceProxy.h"
 
 
 UMannyAnimInstance::UMannyAnimInstance()
     : Super()
-    //, AnimInstanceProxy(this)
 {
 }
 
@@ -43,7 +43,6 @@ void UMannyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 FAnimInstanceProxy* UMannyAnimInstance::CreateAnimInstanceProxy()
 {
     return new FMannyAnimInstanceProxy(this);
-    // return &AnimInstanceProxy;
 }
 
 void UMannyAnimInstance::DestroyAnimInstanceProxy(FAnimInstanceProxy* InProxy)

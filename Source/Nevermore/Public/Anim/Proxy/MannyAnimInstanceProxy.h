@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstanceProxy.h"
-#include "MannyAnimData.h"
 #include "MannyAnimInstanceProxy.generated.h"
 
 class UMannyAnimInstance;
@@ -33,10 +32,7 @@ protected:
 	/** Called before update so we can copy any data we need */
 	virtual void PreUpdate(UAnimInstance* InAnimInstance, float DeltaSeconds) override;
 
-	/** Update override point */
-	// virtual void Update(float DeltaSeconds) override;
-
-public: // variables
+public:
 
 	// Is character falling?
 	UPROPERTY(Transient, BlueprintReadOnly, EditAnywhere, Category = "Air Locomotion")
@@ -44,20 +40,18 @@ public: // variables
 
 	// Character current velocity
 	UPROPERTY(Transient, BlueprintReadOnly, EditAnywhere, Category = "Locomotion")
-	FVector Velocity {
-		0.f
-	};
+	FVector Velocity{ 0.f };
 
 	// Character current acceleration
 	UPROPERTY(Transient, BlueprintReadOnly, EditAnywhere, Category = "Locomotion")
-	FVector Acceleration {
-		0.f
-	};
+	FVector Acceleration{ 0.f };
 
-public: // methods
+public:
 
+	// Should character play locomotion animations?
 	bool ShouldMove() const;
 
+	// Get character speed along the ground
 	float GetGroundSpeed() const;
 
 	bool HasJumped() const;

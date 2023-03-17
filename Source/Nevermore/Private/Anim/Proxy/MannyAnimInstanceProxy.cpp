@@ -16,7 +16,7 @@ FMannyAnimInstanceProxy::FMannyAnimInstanceProxy(UAnimInstance* Instance)
     const UMannyAnimInstance* mannyAnimInstance = Cast<UMannyAnimInstance>(Instance);
     if (IsValid(mannyAnimInstance))
     {
-        // copy settings
+        // copy settings from anim instance
         MinimalSpeed = mannyAnimInstance->MinimalSpeed;
         MinimalVelocityZ = mannyAnimInstance->MinimalVelocityZ;
     }
@@ -34,11 +34,6 @@ void FMannyAnimInstanceProxy::PreUpdate(UAnimInstance* InAnimInstance, float Del
         Acceleration = mannyAnimInstance->Acceleration;
     }
 }
-
-/*void FMannyAnimInstanceProxy::Update(float DeltaSeconds)
-{
-    Super::Update(DeltaSeconds);
-}*/
 
 bool FMannyAnimInstanceProxy::ShouldMove() const
 {

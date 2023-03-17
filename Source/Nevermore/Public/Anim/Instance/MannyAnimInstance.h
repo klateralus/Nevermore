@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "Anim/Proxy/MannyAnimInstanceProxy.h"
-#include "Anim/Proxy/MannyAnimData.h"
 #include "MannyAnimInstance.generated.h"
 
 class UCharacterMovementComponent;
+struct FMannyAnimInstanceProxy;
 
 /**
- * 
+ * UMannyAnimInstance implements native thread-safe logic evaluation for animation blueprint 'ABP_Manny'.
+ * Usage of the native class instead of AnimationBlueprint provides x10-15 performance boost.
+ * Usage of a thread-safe approach allows context relevant evaluations to be done on worker threads and not on main thread.
  */
 UCLASS(Transient, Blueprintable)
 class NEVERMORE_API UMannyAnimInstance : public UAnimInstance
@@ -20,9 +21,6 @@ class NEVERMORE_API UMannyAnimInstance : public UAnimInstance
 
 	UPROPERTY(Transient)
 	UCharacterMovementComponent* MovementComponent{nullptr};
-
-	// UPROPERTY(Transient, BlueprintReadOnly, Category = "Runtime", meta = (AllowPrivateAccess = "true"))
-	// FMannyAnimInstanceProxy AnimInstanceProxy;
 
 	// Is character falling?
 	bool bIsFalling{ false };
@@ -51,8 +49,10 @@ public:
 
 protected:
 
+	/** Override point for derived classes to create their own proxy objects (allows custom allocation) */
 	virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override;
 
+	/** Override point for derived classes to destroy their own proxy objects (allows custom allocation) */
 	virtual void DestroyAnimInstanceProxy(FAnimInstanceProxy* InProxy) override;
 
 	friend struct FMannyAnimInstanceProxy;
@@ -69,15 +69,19 @@ public:
 
 public:
 
+	// Get Anim Instance Proxy for a thread safe logic evaluation
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Optimization", meta = (BlueprintThreadSafe))
 	const FMannyAnimInstanceProxy& GetMannyAnimInstanceProxy() const;
 
+	// Should character play locomotion animations?
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Locomotion", meta = (BlueprintThreadSafe))
 	bool ShouldMove() const;
 
+	// Should character stop locomotion animations?
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Locomotion", meta = (BlueprintThreadSafe))
 	bool ShouldNotMove() const { return !ShouldMove(); };
 
+	// Get character speed along the ground
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Locomotion", meta = (BlueprintThreadSafe))
 	float GetGroundSpeed() const;
 
