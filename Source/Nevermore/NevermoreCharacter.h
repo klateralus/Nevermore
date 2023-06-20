@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "NevermoreCharacter.generated.h"
 
 
 UCLASS(config=Game)
-class ANevermoreCharacter : public ACharacter
+class ANevermoreCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -37,8 +38,18 @@ class ANevermoreCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* UseAbilityAction;
+
+	TObjectPtr<class UNAbilitySystemComponent> AbilitySystemComponent{nullptr};
+
 public:
 	ANevermoreCharacter();
+
+	//~ Begin IAbilitySystemInterface
+	/** Returns our Ability System Component. */
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	//~ End IAbilitySystemInterface
 	
 
 protected:
@@ -48,6 +59,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	virtual void UseAbility();
 			
 
 protected:

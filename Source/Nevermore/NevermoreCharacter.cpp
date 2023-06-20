@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "NevermoreCharacter.h"
+#include "GameplayAbilities/NAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -49,6 +50,13 @@ ANevermoreCharacter::ANevermoreCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+	
+	AbilitySystemComponent = CreateDefaultSubobject<UNAbilitySystemComponent>(TEXT("NevermoreAbilitiesComponent"));
+}
+
+UAbilitySystemComponent* ANevermoreCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
 }
 
 void ANevermoreCharacter::BeginPlay()
@@ -84,6 +92,8 @@ void ANevermoreCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ANevermoreCharacter::Look);
 
+		// Using Ability
+		EnhancedInputComponent->BindAction(UseAbilityAction, ETriggerEvent::Triggered, this, &ANevermoreCharacter::UseAbility);
 	}
 
 }
@@ -122,6 +132,11 @@ void ANevermoreCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void ANevermoreCharacter::UseAbility()
+{
+	
 }
 
 
