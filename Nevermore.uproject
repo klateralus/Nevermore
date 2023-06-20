@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.1",
+	"EngineAssociation": "5.2",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -27,24 +27,12 @@
 			"Enabled": true
 		},
 		{
-			"Name": "VisualStudioTools",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/362651520df94e4fa65492dbcba44ae2",
-			"SupportedTargetPlatforms": [
-				"Win64"
-			]
-		},
-		{
 			"Name": "AnimToTexture",
 			"Enabled": true
 		},
-		{
-			"Name": "ACLPlugin",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/993b51e29e9a48d0b3fb449645b82cb6"
-		}
 	],
 	"TargetPlatforms": [
-		"Windows"
+		"Windows",
+		"HoloLens"
 	]
 }
